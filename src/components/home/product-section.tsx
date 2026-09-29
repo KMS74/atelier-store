@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { Product } from "@/lib/catalog";
+import type { Product } from "@/lib/product";
 import { ProductCard } from "../product-card";
 
 type ProductSectionProps = {

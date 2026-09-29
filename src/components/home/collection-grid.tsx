@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import { collections } from "@/lib/catalog";
+import { StoreImage } from "../store-image";
 
 export function CollectionGrid() {
   return (
@@ -11,12 +11,11 @@ export function CollectionGrid() {
           <li key={collection.slug}>
             <Link href={`/collections/${collection.slug}`} className="group block">
               <div className="relative aspect-3/4 overflow-hidden bg-surface">
-                <Image
+                <StoreImage
                   src={collection.image.src}
                   alt={collection.image.alt}
-                  fill
                   sizes="(min-width: 768px) 25vw, 50vw"
-                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  className="object-cover group-hover:scale-105"
                 />
               </div>
               <h3 className="mt-3 text-nav font-medium group-hover:underline">{collection.name}</h3>

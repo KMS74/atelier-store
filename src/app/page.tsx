@@ -4,9 +4,18 @@ import { EditorialTriptych } from "@/components/home/editorial-triptych";
 import { Hero } from "@/components/home/hero";
 import { ProductSection } from "@/components/home/product-section";
 import { StoreFeature } from "@/components/home/store-feature";
-import { leatherGoods, newArrivals } from "@/lib/catalog";
+import { getProductsBySlugs } from "@/db/queries/products";
+import { leatherGoodsSlugs, newArrivalSlugs } from "@/lib/catalog";
 
-export default function Home() {
+// Refresh product data (stock, prices) at most once a minute.
+export const revalidate = 60;
+
+export default async function Home() {
+  const [newArrivals, leatherGoods] = await Promise.all([
+    getProductsBySlugs(newArrivalSlugs),
+    getProductsBySlugs(leatherGoodsSlugs),
+  ]);
+
   return (
     <>
       <Hero />

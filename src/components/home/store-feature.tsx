@@ -1,15 +1,14 @@
-import Image from "next/image";
 import Link from "next/link";
 import { services, storeFeature } from "@/lib/catalog";
+import { StoreImage } from "../store-image";
 
 export function StoreFeature() {
   return (
     <section>
-      <div className="relative h-[70svh] min-h-112 bg-ink text-paper">
-        <Image
+      <div className="relative h-[70svh] min-h-112 overflow-hidden bg-ink text-paper">
+        <StoreImage
           src={storeFeature.image.src}
           alt={storeFeature.image.alt}
-          fill
           sizes="(orientation: portrait) 110vh, 100vw"
           className="object-cover"
         />

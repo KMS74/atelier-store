@@ -1,15 +1,14 @@
-import Image from "next/image";
 import Link from "next/link";
 import { craftStory } from "@/lib/catalog";
+import { StoreImage } from "../store-image";
 
 export function CraftStory() {
   return (
     <section className="grid md:grid-cols-2">
-      <div className="relative aspect-4/5 md:aspect-auto md:min-h-176">
-        <Image
+      <div className="relative aspect-4/5 overflow-hidden md:aspect-auto md:min-h-176">
+        <StoreImage
           src={craftStory.image.src}
           alt={craftStory.image.alt}
-          fill
           // Landscape source cropped into a portrait frame.
           sizes="(min-width: 768px) 65vw, 170vw"
           className="object-cover object-[25%_0%] md:object-center"

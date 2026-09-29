@@ -1,4 +1,4 @@
-import { getStockState, stockLabel } from "@/lib/catalog";
+import { getStockState, stockLabel } from "@/lib/product";
 
 // No accent colors in the palette, so the state reads from its text plus a filled, outlined or grey marker.
 const markerStyles = {

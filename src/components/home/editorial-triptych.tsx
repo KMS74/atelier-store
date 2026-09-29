@@ -1,14 +1,14 @@
-import Image from "next/image";
 import Link from "next/link";
 import { monochromeEdit } from "@/lib/catalog";
+import { StoreImage } from "../store-image";
 
 export function EditorialTriptych() {
   return (
     <section className="relative bg-ink text-paper">
       <div className="grid md:grid-cols-3">
         {monochromeEdit.images.map((image) => (
-          <div key={image.src} className="relative aspect-4/5 md:aspect-portrait">
-            <Image src={image.src} alt={image.alt} fill sizes="(min-width: 768px) 50vw, 130vw" className="object-cover" />
+          <div key={image.src} className="relative aspect-4/5 overflow-hidden md:aspect-portrait">
+            <StoreImage src={image.src} alt={image.alt} sizes="(min-width: 768px) 50vw, 130vw" className="object-cover" />
           </div>
         ))}
       </div>

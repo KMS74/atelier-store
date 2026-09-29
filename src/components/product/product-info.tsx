@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { formatPrice, getStockState, type Product } from "@/lib/catalog";
+import { formatPrice, getStockState, type Product } from "@/lib/product";
 import { ChevronIcon } from "../icons";
 import { AddToBag } from "./add-to-bag";
 import { StockStatus } from "./stock-status";

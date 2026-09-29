@@ -3,17 +3,21 @@ import { notFound } from "next/navigation";
 import { ProductSection } from "@/components/home/product-section";
 import { ProductGallery } from "@/components/product/product-gallery";
 import { ProductInfo } from "@/components/product/product-info";
-import { getProduct, getRelatedProducts, products } from "@/lib/catalog";
+import { getAllProductSlugs, getProduct, getRelatedProducts } from "@/db/queries/products";
 
-// Only the sample products exist; any other slug is a 404.
-export const dynamicParams = false;
+// Refresh product data (stock, prices) at most once a minute.
+export const revalidate = 60;
 
-export function generateStaticParams() {
-  return products.map((product) => ({ slug: product.slug }));
+// Products added after a build render on first visit; unknown slugs 404 via notFound().
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  const slugs = await getAllProductSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps<"/products/[slug]">): Promise<Metadata> {
-  const product = getProduct((await params).slug);
+  const product = await getProduct((await params).slug);
   if (!product) return {};
 
   return {
@@ -24,8 +28,10 @@ export async function generateMetadata({ params }: PageProps<"/products/[slug]">
 }
 
 export default async function ProductPage({ params }: PageProps<"/products/[slug]">) {
-  const product = getProduct((await params).slug);
+  const product = await getProduct((await params).slug);
   if (!product) notFound();
+
+  const related = await getRelatedProducts(product);
 
   return (
     <div className="pt-header">
@@ -46,7 +52,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
           eyebrow={product.category.name}
           title="You May Also Like"
           href={`/collections/${product.category.slug}`}
-          products={getRelatedProducts(product)}
+          products={related}
         />
       </div>
     </div>

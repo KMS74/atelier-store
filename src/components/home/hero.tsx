@@ -1,14 +1,13 @@
-import Image from "next/image";
 import Link from "next/link";
 import { hero } from "@/lib/catalog";
+import { StoreImage } from "../store-image";
 
 export function Hero() {
   return (
     <section className="relative h-svh min-h-128 overflow-hidden bg-ink text-paper">
-      <Image
+      <StoreImage
         src={hero.image.src}
         alt={hero.image.alt}
-        fill
         preload
         // Cropped to fill the viewport height, so portrait screens need a wider source.
         sizes="(orientation: portrait) 150vh, 100vw"
