@@ -17,12 +17,12 @@ The tokens described here are implemented in `src/app/globals.css` (see [Token m
 
 - One geometric sans family for everything, in weights 100, 400, 500 and 700.
 - One display serif, used only for the wordmark (logo and the oversized footer wordmark).
-- Letter-spacing is slightly tight everywhere: about -0.03em to -0.04em for normal text and -0.05em for uppercase labels.
+- Letter-spacing is slightly tight everywhere: about -0.03em to -0.04em for normal text and -0.05em for uppercase labels. This app loosens uppercase labels to +0.04em because Jost crowds at tight tracking.
 - Font sizes don't change between mobile and desktop.
 
 | Role | Size / line height | Weight | Case | Tracking |
 |---|---|---|---|---|
-| Label (section headings, buttons, "MENU") | 12 / 16 | 700 | Uppercase | -0.05em |
+| Label (section headings, buttons, "MENU") | 12 / 16 | 700 | Uppercase | -0.05em (reference); +0.04em in this app, since Jost is wider |
 | Caption (small body, footer links, image captions) | 12 / 16 | 500 | Normal | -0.03em |
 | Body, input text | 16 / 24 | 400 (inputs 100) | Normal | -0.04em |
 | Nav (main menu items) | 20 / 28 | 500 | Normal | -0.04em |

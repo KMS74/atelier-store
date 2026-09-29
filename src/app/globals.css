@@ -50,7 +50,8 @@
   font-size: var(--text-caption);
   line-height: var(--text-caption--line-height);
   font-weight: 700;
-  letter-spacing: -0.05em;
+  /* Jost is wider than the reference font; tight tracking crowds uppercase. */
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
@@ -65,5 +66,10 @@
 @layer base {
   body {
     @apply bg-paper font-sans text-body text-ink antialiased;
+  }
+
+  /* Lock page scroll while a modal (e.g. the menu drawer) is open. */
+  html:has(dialog[open]) {
+    overflow: hidden;
   }
 }

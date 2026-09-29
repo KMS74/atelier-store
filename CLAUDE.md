@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Atelier Store: a Next.js 16 (App Router, `src/` dir, Turbopack) e-commerce app on TypeScript, Tailwind CSS v4, Better Auth, Drizzle ORM and Neon Postgres. Currently only scaffolding and minimal integrations exist; no e-commerce features, schemas, sign-in methods or UI have been built yet.
+Atelier Store: a Next.js 16 (App Router, `src/` dir, Turbopack) e-commerce app on TypeScript, Tailwind CSS v4, Better Auth, Drizzle ORM and Neon Postgres. So far there is a homepage and a product details page (`/products/[slug]`) built on sample data, plus the database and auth scaffolding. Collection pages, cart, checkout, database schemas and sign-in methods don't exist yet, so many links point at routes that currently 404.
 
 ## Commands
 
@@ -30,4 +30,7 @@ Copy `.env.example` to `.env.local`. `drizzle.config.ts` loads `.env.local` expl
 - `src/lib/auth-client.ts` is the React client (`better-auth/react`), with `baseURL` from `NEXT_PUBLIC_APP_URL`.
 - `src/app/api/auth/[...all]/route.ts` mounts the auth handler via `toNextJsHandler(auth)`.
 - Design tokens (monochrome palette, type scale, gutters, `text-label` / `px-page` utilities) live in `src/app/globals.css` as Tailwind v4 `@theme` / `@utility` blocks. Fonts are Jost (`font-sans`) and Bodoni Moda (`font-display`, wordmark only), loaded with `next/font` in `layout.tsx`. Rationale and usage rules are in `docs/design-reference.md`; use the tokens rather than raw colors or arbitrary sizes.
+- Storefront content is sample data in `src/lib/catalog.ts` (products, collections, menu and footer links) until it comes from the database. Components live in `src/components/`, with homepage sections in `src/components/home/`. `SiteHeader` (fixed, transparent over the homepage hero until it scrolls away) and `SiteFooter` are mounted in the root layout. Pages other than `/` need top padding (`pt-header`) because the header is fixed.
+- Product pages are prerendered from `products` via `generateStaticParams` with `dynamicParams = false`, so an unknown slug is a 404. Stock state comes from `getStockState(stock)` in `catalog.ts` (0 = sold out, up to `LOW_STOCK_THRESHOLD` = low stock) and is shared by `ProductCard` and the product page's `StockStatus`, so both always agree. Each product's gallery is built by the `product()` helper: the product shot, a zoomed detail crop of the same photo (Unsplash focal-point params) and a shared lifestyle shot for its category. "Add to Shopping Bag" is a placeholder that says the bag isn't available yet.
+- Images go through a custom global loader (`src/lib/image-loader.ts`, set in `next.config.ts`) that asks the Unsplash CDN for the right width, so the Next image optimizer isn't used. Images from other hosts pass through unresized. When an image is cropped with `object-cover` into a frame of a different shape, set `sizes` for the cropped width, not the frame width (see `hero.tsx`), or it will be blurry.
 - Don't add `import "server-only"` to `src/db` or `src/lib/auth.ts`: the Better Auth CLI loads `auth.ts` outside Next, where that import throws.
