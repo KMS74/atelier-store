@@ -1,0 +1,9 @@
+export const brandName = "Atelier";
+
+export function Wordmark({ className = "" }: { className?: string }) {
+  return (
+    <span className={`font-display text-title tracking-[0.3em] uppercase ${className}`}>
+      {brandName}
+    </span>
+  );
+}

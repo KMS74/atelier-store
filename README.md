@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Atelier Store
 
-## Getting Started
+Next.js (App Router) + TypeScript + Tailwind CSS, with Better Auth, Drizzle ORM and Neon Postgres.
 
-First, run the development server:
+## Setup
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+1. Install dependencies: `npm install`
+2. Copy `.env.example` to `.env.local` and fill in:
+   - `DATABASE_URL` — Neon connection string
+   - `BETTER_AUTH_SECRET` — generate with `npx auth secret`
+3. Start the dev server: `npm run dev`
+
+## Project structure
+
+```
+src/
+  app/
+    api/auth/[...all]/route.ts   Better Auth route handler
+    layout.tsx, page.tsx, globals.css
+  db/
+    index.ts                     Drizzle client (Neon HTTP driver)
+    schema.ts                    Drizzle schema entry point
+  lib/
+    auth.ts                      Better Auth server instance
+    auth-client.ts               Better Auth React client
+drizzle/                         Generated SQL migrations
+drizzle.config.ts                drizzle-kit config
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Scripts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Script | Description |
+| --- | --- |
+| `npm run dev` / `build` / `start` | Next.js |
+| `npm run lint` / `typecheck` | ESLint / TypeScript |
+| `npm run auth:generate` | Generate Better Auth tables into `src/db/auth-schema.ts` |
+| `npm run db:generate` | Generate SQL migrations from the schema |
+| `npm run db:migrate` | Apply migrations |
+| `npm run db:push` | Push the schema directly (for prototyping) |
+| `npm run db:studio` | Open Drizzle Studio |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Adding the auth tables
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. `npm run auth:generate`
+2. Uncomment `export * from "./auth-schema";` in `src/db/schema.ts`
+3. `npm run db:generate && npm run db:migrate`
