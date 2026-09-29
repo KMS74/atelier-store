@@ -1,26 +1,69 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Design tokens. See docs/design-reference.md for the rationale. */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-bodoni-moda), ui-serif, Georgia, serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@theme {
+  /* Monochrome palette: imagery supplies the color. */
+  --color-ink: #000000;
+  --color-paper: #ffffff;
+  --color-muted: #767676;
+  --color-line: rgb(0 0 0 / 0.15);
+  --color-line-inverse: rgb(255 255 255 / 0.5);
+  --color-scrim: rgb(0 0 0 / 0.4);
+  --color-surface: #efefef;
+
+  /* Type scale. Sizes don't change between mobile and desktop. */
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1rem;
+  --text-caption--letter-spacing: -0.03em;
+  --text-body: 1rem;
+  --text-body--line-height: 1.5rem;
+  --text-body--letter-spacing: -0.04em;
+  --text-nav: 1.25rem;
+  --text-nav--line-height: 1.75rem;
+  --text-nav--letter-spacing: -0.04em;
+  --text-title: 1.5rem;
+  --text-title--line-height: 2rem;
+  --text-title--letter-spacing: -0.03em;
+  --text-headline: 2rem;
+  --text-headline--line-height: 2.5rem;
+  --text-headline--letter-spacing: -0.03em;
+
+  /* Layout dimensions. */
+  --spacing-gutter: 1.5rem;
+  --spacing-gutter-lg: 4rem;
+  --spacing-header: 4.5rem;
+  --spacing-drawer: 37.5rem;
+  --container-page: 90rem;
+
+  --aspect-portrait: 9 / 16;
+  --aspect-tile: 3 / 2;
+}
+
+/* 12px bold uppercase: section headings, button text, "MENU". */
+@utility text-label {
+  font-size: var(--text-caption);
+  line-height: var(--text-caption--line-height);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+}
+
+/* Page side margin: 24px on mobile, 64px from md up. */
+@utility px-page {
+  padding-inline: var(--spacing-gutter);
+  @variant md {
+    padding-inline: var(--spacing-gutter-lg);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  body {
+    @apply bg-paper font-sans text-body text-ink antialiased;
+  }
 }
